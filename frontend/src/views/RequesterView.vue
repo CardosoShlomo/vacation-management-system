@@ -22,7 +22,7 @@
     <div class="requests-list">
       <div v-for="req in requests" :key="req.id" class="request-card">
         <div class="request-header">
-          <span class="dates"><strong>{{ req.start_date }}</strong> to <strong>{{ req.end_date }}</strong></span>
+          <span class="dates"><strong>{{ formatDate(req.start_date) }}</strong> to <strong>{{ formatDate(req.end_date) }}</strong></span>
           <span class="status-badge" :class="'status-' + req.status">{{ req.status }}</span>
         </div>
         <p v-if="req.reason"><strong>Reason:</strong> {{ req.reason }}</p>
@@ -70,6 +70,10 @@ async function handleSubmit() {
     console.error('Error submitting request:', error)
     alert('Failed to submit request')
   }
+}
+
+function formatDate(dateString: string) {
+  return dateString.split('T')[0]
 }
 
 onMounted(() => {

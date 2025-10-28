@@ -20,7 +20,7 @@
         </div>
 
         <div class="request-details">
-          <p><strong>Dates:</strong> {{ req.start_date }} to {{ req.end_date }}</p>
+          <p><strong>Dates:</strong> {{ formatDate(req.start_date) }} to {{ formatDate(req.end_date) }}</p>
           <p v-if="req.reason"><strong>Reason:</strong> {{ req.reason }}</p>
           <p v-if="req.comments"><strong>Comments:</strong> {{ req.comments }}</p>
         </div>
@@ -112,6 +112,10 @@ async function confirmReject() {
     }
   }
   closeRejectModal()
+}
+
+function formatDate(dateString: string) {
+  return dateString.split('T')[0]
 }
 
 onMounted(() => {
