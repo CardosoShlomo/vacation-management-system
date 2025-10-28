@@ -16,16 +16,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const API_URL = 'http://localhost:3000/api'
 
 const startDate = ref('')
 const endDate = ref('')
 const reason = ref('')
-const requests = ref([
-  { id: 1, startDate: '2025-11-01', endDate: '2025-11-05', status: 'pending' }
-])
+const requests = ref([])
 
-function handleSubmit() {
-  console.log('Submit', { startDate: startDate.value, endDate: endDate.value, reason: reason.value })
+async function fetchMyRequests() {
+  try {
+    const response = await axios.get(`${API_URL}/requests/my`)
+    requests.value = response.data
+  } catch (error) {
+    console.error('Error fetching requests:', error)
+  }
 }
+
+async function handleSubmit() {
+  try {
+    await axios.post(`${API_URL}/requests`, {
+      start_date: startDate.value,
+      end_date: endDate.value,
+      reason: reason.value
+    })
+    alert('Request submitted!')
+    startDate.value = ''
+    endDate.value = ''
+    reason.value = ''
+    fetchMyRequests() // Refresh list
+  } catch (error) {
+    console.error('Error submitting request:', error)
+    alert('Failed to submit request')
+  }
+}
+
+onMounted(() => {
+  fetchMyRequests()
+})
 </script>
