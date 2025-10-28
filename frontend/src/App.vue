@@ -1,11 +1,33 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div>
+    <nav>
+      <RouterLink to="/requester">Requester</RouterLink>
+      <RouterLink to="/validator">Validator</RouterLink>
+    </nav>
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+</script>
+
+<style>
+nav {
+  padding: 1rem;
+  background: #333;
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+nav a.router-link-active {
+  background: #42b983;
+  border-radius: 4px;
+}
+</style>
